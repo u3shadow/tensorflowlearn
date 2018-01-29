@@ -55,8 +55,10 @@ train_step = tf.train.AdamOptimizer(1e-4).minimize(cross_entropy)
 correct_prediction = tf.equal(tf.argmax(y_conv, 1), tf.argmax(y_, 1))
 accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
+saver = tf.train.Saver()
 with tf.Session() as sess:
   sess.run(tf.global_variables_initializer())
+  save_path = saver.save(sess,"my_cnn/save_cnn.ckpt")
   for i in range(20000):
     batch = mnist.train.next_batch(50)
     if i % 100 == 0:
